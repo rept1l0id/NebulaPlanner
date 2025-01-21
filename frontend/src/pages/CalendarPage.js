@@ -16,7 +16,7 @@ const CalendarPage = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/api/calendar", {
+                const response = await axios.get("http://" + process.env.HOST + "/api/calendar", {
                     headers: { Authorization: `Bearer ${getToken()}` },
                 });
                 setEvents(response.data);
@@ -38,7 +38,7 @@ const CalendarPage = () => {
             if (isEdit) {
                 // Редактирование события
                 const response = await axios.put(
-                    `http://localhost:4000/api/calendar/${currentEvent.id}`,
+                    `http://` + process.env.HOST + `/api/calendar/${currentEvent.id}`,
                     formattedValues,
                     { headers: { Authorization: `Bearer ${getToken()}` } }
                 );
@@ -46,7 +46,7 @@ const CalendarPage = () => {
             } else {
                 // Создание нового события
                 const response = await axios.post(
-                    "http://localhost:4000/api/calendar",
+                    "http://" + process.env.HOST + "/api/calendar",
                     formattedValues,
                     { headers: { Authorization: `Bearer ${getToken()}` } }
                 );
@@ -74,7 +74,7 @@ const CalendarPage = () => {
 
     const handleDelete = async (eventId) => {
         try {
-            await axios.delete(`http://localhost:4000/api/calendar/${eventId}`, {
+            await axios.delete(`http://` + process.env.HOST + `/api/calendar/${eventId}`, {
                 headers: { Authorization: `Bearer ${getToken()}` },
             });
             setEvents(events.filter((event) => event.id !== eventId));

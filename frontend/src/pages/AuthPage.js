@@ -11,7 +11,7 @@ const AuthPage = () => {
 
     const onLogin = async (values) => {
         try {
-            const response = await axios.post("http://localhost:4000/api/auth/login", values);
+            const response = await axios.post("http://" + process.env.HOST + "/api/auth/login", values);
             const expirationTime = Date.now() + 60 * 60 * 1000; // Текущий момент + 1 час
             localStorage.setItem(
                 "authToken",
@@ -25,7 +25,7 @@ const AuthPage = () => {
 
     const onRegister = async (values) => {
         try {
-            await axios.post("http://localhost:4000/api/auth/register", values);
+            await axios.post("http://" + process.env.HOST + "/api/auth/register", values);
             setActiveTab("login"); // Переключение на вкладку входа
             alert("Registration successful!");
         } catch (error) {
@@ -34,7 +34,7 @@ const AuthPage = () => {
     };
 
     const googleLogin = () => {
-        window.location.href = "http://localhost:4000/api/auth/google";
+        window.location.href = "http://" + process.env.HOST + "/api/auth/google";
     };
 
     const renderLoginForm = () => (
