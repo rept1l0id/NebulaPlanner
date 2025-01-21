@@ -17,7 +17,7 @@ router.get(
     passport.authenticate("google", { session: false }),
     (req, res) => {
         const token = jwt.sign({ userId: req.user.id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-        res.redirect(`http://localhost:3000/dashboard?token=${token}`); // Редирект с токеном
+        res.redirect(`http://` + process.env.HOST + `/dashboard?token=${token}`); // Редирект с токеном
     }
 );
 
