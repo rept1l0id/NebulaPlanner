@@ -2,7 +2,6 @@ const express = require('express');
 const { register, login } = require('../controllers/authController');
 const passport = require("../utils/googleAuth");
 const jwt = require("jsonwebtoken");
-require('dotenv').config();
 
 const router = express.Router();
 
