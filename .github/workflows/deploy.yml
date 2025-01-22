@@ -19,22 +19,10 @@ jobs:
         run: sudo apt-get install -y sshpass
 
       - name: Check secrets
-        run:
-          echo DB_NAME=${{ secrets.DB_NAME }}
-          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-          echo DB_HOST=${{ secrets.DB_HOST }}
-          echo DB_PORT=${{ secrets.DB_PORT }}
-          echo JWT_SECRET=${{ secrets.JWT_SECRET }}
-          echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
-          echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
-          echo GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }}
-          echo HOST=${{ secrets.HOST }}
-          echo SSH_PASSWORD=${{ secrets.SSH_PASSWORD }}
-          echo SSH_USERNAME=${{ secrets.SSH_USERNAME }}
-          echo SERVER_IP=${{ secrets.SERVER_IP }}
-
-      - name: SSH into server and deploy
         env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
           DB_NAME: ${{ secrets.DB_NAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_HOST: ${{ secrets.DB_HOST }}
@@ -43,9 +31,25 @@ jobs:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+          HOST: ${{ secrets.HOST }}
+        run:
+          echo $SSH_PASSWORD
+          echo $SSH_USERNAME
+          echo $SERVER_IP
+
+      - name: SSH into server and deploy
+        env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
           HOST: ${{ secrets.HOST }}
         run: |
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no "$SSH_USERNAME@$SERVER_IP" << 'EOF'
