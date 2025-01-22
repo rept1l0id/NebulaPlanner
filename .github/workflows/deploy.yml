@@ -18,6 +18,34 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
+      - name: Check secrets
+        env:
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          HOST: ${{ secrets.HOST }}
+        run:
+          echo "DB_NAME=$DB_NAME"
+          echo "DB_PASSWORD=$DB_PASSWORD"
+          echo "DB_HOST=$DB_HOST"
+          echo "DB_PORT=$DB_PORT"
+          echo "JWT_SECRET=$JWT_SECRET"
+          echo "GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID"
+          echo "GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET"
+          echo "GOOGLE_REDIRECT_URI=$GOOGLE_REDIRECT_URI"
+          echo "HOST=$HOST"
+          echo "SSH_PASSWORD=$SSH_PASSWORD"
+          echo "SSH_USERNAME=$SSH_USERNAME"
+          echo "SERVER_IP=$SERVER_IP"
+
       - name: SSH into server and deploy
         env:
           DB_NAME: ${{ secrets.DB_NAME }}
@@ -33,18 +61,18 @@ jobs:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           HOST: ${{ secrets.HOST }}
         run: |
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no "$SSH_USERNAME"@"$SERVER_IP" << 'EOF'
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no "$SSH_USERNAME@$SERVER_IP" << 'EOF'
             cd /root/NebulaPlanner
-            echo DB_NAME="$DB_NAME" >> backend/.env
-            echo DB_PASSWORD="$DB_PASSWORD" >> backend/.env
-            echo DB_HOST="$DB_HOST" >> backend/.env
-            echo DB_PORT="$DB_PORT" >> backend/.env
-            echo JWT_SECRET="$JWT_SECRET" >> backend/.env
-            echo GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID" >> backend/.env
-            echo GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET" >> backend/.env
-            echo GOOGLE_REDIRECT_URI="$GOOGLE_REDIRECT_URI" >> backend/.env
-            echo HOST="$HOST" >> backend/.env
-            echo HOST="$HOST" >> frontend/.env
+            echo "DB_NAME=$DB_NAME" >> backend/.env
+            echo "DB_PASSWORD=$DB_PASSWORD" >> backend/.env
+            echo "DB_HOST=$DB_HOST" >> backend/.env
+            echo "DB_PORT=$DB_PORT" >> backend/.env
+            echo "JWT_SECRET=$JWT_SECRET" >> backend/.env
+            echo "GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID" >> backend/.env
+            echo "GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET" >> backend/.env
+            echo "GOOGLE_REDIRECT_URI=$GOOGLE_REDIRECT_URI" >> backend/.env
+            echo "HOST=$HOST" >> backend/.env
+            echo "HOST=$HOST" >> frontend/.env
             git pull origin main
             docker-compose down
             docker-compose up --build -d
