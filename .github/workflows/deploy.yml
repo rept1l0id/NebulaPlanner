@@ -15,21 +15,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
-
-      - name: Check secrets
-        env:
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-        run:
-          echo $SSH_PASSWORD
-          echo $SSH_USERNAME
-          echo $SERVER_IP
+      - name: Install ssh-keys
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" = > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} > ~/.ssh/known_hosts
 
       - name: SSH into server and deploy
         env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
@@ -43,7 +37,7 @@ jobs:
           GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
           HOST: ${{ secrets.HOST }}
         run: |
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no "$SSH_USERNAME@$SERVER_IP" << 'EOF'
+          ssh $SSH_USERNAME@$SERVER_IP
             cd /root/NebulaPlanner
             echo "DB_NAME=$DB_NAME" >> backend/.env
             echo "DB_PASSWORD=$DB_PASSWORD" >> backend/.env
