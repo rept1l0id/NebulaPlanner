@@ -5,9 +5,16 @@ const authRoutes = require('./routes/authRoutes');
 const sequelize = require('./utils/database');
 const calendarRoutes = require('./routes/calendarRoutes');
 const app = express();
+require('dotenv').config();
+
+const corsOptions = {
+    origin: process.env.HOST, // Замените на домен фронтенда
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Для поддержки куки
+};
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Routes
