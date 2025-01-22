@@ -4,6 +4,7 @@ import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import dayjs from "dayjs";
 import { getToken } from "../utils/auth";
+require('dotenv').config();
 
 const CalendarPage = () => {
     const [events, setEvents] = useState([]);

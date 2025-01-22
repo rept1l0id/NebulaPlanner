@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Tabs, Form, Input, Button, Card, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+require('dotenv').config();
 
 const { Title } = Typography;
 
