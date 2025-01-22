@@ -37,7 +37,7 @@ jobs:
           GOOGLE_REDIRECT_URI: ${{ secrets.GOOGLE_REDIRECT_URI }}
           HOST: ${{ secrets.HOST }}
         run: |
-          ssh $SSH_USERNAME@$SERVER_IP
+          ssh $SSH_USERNAME@$SERVER_IP << 'EOF'
             cd NebulaPlanner
             echo "DB_NAME=$DB_NAME" >> backend/.env
             echo "DB_PASSWORD=$DB_PASSWORD" >> backend/.env
