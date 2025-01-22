@@ -38,7 +38,7 @@ jobs:
           HOST: ${{ secrets.HOST }}
         run: |
           ssh $SSH_USERNAME@$SERVER_IP
-            cd /root/NebulaPlanner
+            cd NebulaPlanner
             echo "DB_NAME=$DB_NAME" >> backend/.env
             echo "DB_PASSWORD=$DB_PASSWORD" >> backend/.env
             echo "DB_HOST=$DB_HOST" >> backend/.env
