@@ -29,6 +29,9 @@
       "react-app/jest"
     ]
   },
+  "babel": {
+    "presets": ["@babel/preset-env", "@babel/preset-react"]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -40,9 +43,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "babel": {
-    "presets": ["@babel/preset-env", "@babel/preset-react"]
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
