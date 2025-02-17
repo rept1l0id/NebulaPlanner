@@ -73,4 +73,6 @@ jobs:
         run: npm install
 
       - name: Run ESLint
-        run: npx eslint src --ext .js
+        run: |
+          cd frontend
+          npx eslint src --ext .js
