@@ -33,7 +33,9 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd frontend
+          npm install
 
       - name: Find PR number
         uses: jwalton/gh-find-current-pr@v1
@@ -51,7 +53,9 @@ jobs:
         run: sleep 20
 
       - name: Install Cypress
-        run: npm install cypress@13.15.0
+        run: |
+          cd frontend
+          npm install cypress@13.15.0
 
       - name: Run Cypress tests
         run: npx cypress run --headed
@@ -68,7 +72,9 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd frontend
+          npm install
 
       - name: Run ESLint
         run: npx eslint src --ext .js
