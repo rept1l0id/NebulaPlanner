@@ -11,7 +11,7 @@ const AuthPage = () => {
 
     const onLogin = async (values) => {
         try {
-            const response = await axios.post("http://" + process.env.HOST + "/api/auth/login", values);
+            const response = await axios.post("http://185.91.52.121/api/auth/login", values);
             const expirationTime = Date.now() + 60 * 60 * 1000; // Текущий момент + 1 час
             localStorage.setItem(
                 "authToken",
@@ -25,16 +25,16 @@ const AuthPage = () => {
 
     const onRegister = async (values) => {
         try {
-            await axios.post("http://" + process.env.HOST + "/api/auth/register", values);
+            await axios.post("http://185.91.52.121/api/auth/register", values);
             setActiveTab("login"); // Переключение на вкладку входа
-            alert("Registration successful!");
+            alert("Registration successfu!");
         } catch (error) {
             alert(error.response?.data?.message || "Something went wrong");
         }
     };
 
     const googleLogin = () => {
-        window.location.href = "http://" + process.env.HOST + "/api/auth/google";
+        window.location.href = "http://185.91.52.121/api/auth/google";
     };
 
     const renderLoginForm = () => (
