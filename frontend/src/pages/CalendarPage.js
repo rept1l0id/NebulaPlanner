@@ -127,7 +127,7 @@ const CalendarPage = () => {
                 <List
                     header={`Events for ${selectedDate.format("YYYY-MM-DD")}`}
                     dataSource={filteredEvents}
-                    locale={{ emptyText: "Сегодня дел нет!" }} // Пустое сообщение
+                    locale={{ emptyText: "В этот день дел нет!" }} // Пустое сообщение
                     renderItem={(event) => (
                         <List.Item
                             actions={[
