@@ -26,8 +26,14 @@ const AuthPage = () => {
     const onRegister = async (values) => {
         try {
             await axios.post("http://185.91.52.121/api/auth/register", values);
-            setActiveTab("login"); // Переключение на вкладку входа
-            alert("Registration successfu!");
+            const loginValues = {"email": values.email, "password": values.password};
+            const response = await axios.post("http://185.91.52.121/api/auth/login", loginValues);
+            const expirationTime = Date.now() + 60 * 60 * 1000;
+            localStorage.setItem(
+                "authToken",
+                JSON.stringify({ token: response.data.token, expirationTime })
+            );
+            navigate("/dashboard");
         } catch (error) {
             alert(error.response?.data?.message || "Something went wrong");
         }
