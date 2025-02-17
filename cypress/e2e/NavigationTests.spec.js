@@ -23,4 +23,4 @@ describe('started', function () {
         cy.url().should('include', '/kanban');
     });
 
-}
+})
