@@ -33,9 +33,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: |
-          cd frontend
-          npm install
+        run: npm install
 
       - name: Find PR number
         uses: jwalton/gh-find-current-pr@v1
